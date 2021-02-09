@@ -1,11 +1,11 @@
-import { Component, } from "@angular/core";
+import { Component, OnInit, } from "@angular/core";
 
 @Component({
   selector: "my-app",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   firstId = 1000;
   secondId = 2000;
@@ -13,9 +13,23 @@ export class AppComponent {
   allHtmlItemContentsBackup = "";
   htmlResult = "";
 
+  ngOnInit() {
+    this.allHtmlItemContents = this.getHtmlItemContent(true);
+    this.renderHtml();
+    this.allHtmlItemContents = "";
+  }
+
   add() {
     this.allHtmlItemContentsBackup = this.allHtmlItemContents;
 
+    this.allHtmlItemContents += this.getHtmlItemContent(false);
+
+    this.renderHtml()
+
+    this.copyMessage(this.htmlResult);
+  }
+
+  getHtmlItemContent(isTemplate: Boolean){
     this.firstId = this.firstId+1;
     this.secondId = this.secondId+1;
 
@@ -25,7 +39,80 @@ export class AppComponent {
     var buttonText = (<HTMLInputElement>document.getElementById("inputButtonText"))?.value;
     var buttonLink = (<HTMLInputElement>document.getElementById("inputLink"))?.value;
 
+    if (isTemplate){
+      var header = (<HTMLInputElement>document.getElementById("inputHeader"))?.placeholder;
+      var headerDetail = (<HTMLInputElement>document.getElementById("inputHeaderDetail"))?.placeholder;
+      var detail = (<HTMLInputElement>document.getElementById("inputDetail"))?.placeholder;
+      var buttonText = (<HTMLInputElement>document.getElementById("inputButtonText"))?.placeholder;
+      var buttonLink = (<HTMLInputElement>document.getElementById("inputLink"))?.placeholder;
+    }
+
     var hmtlItemTemplate = "<div class=\"card-header collapsed\" id=\"heading-{{second_id}}\" data-toggle=\"collapse\" data-target=\"#collapse-{{first_id}}\" aria-expanded=\"false\"> <button class=\"btn btn-link collapsed\" data-toggle=\"collapse\" data-target=\"#collapse-{{first_id}}\" aria-expanded=\"false\" aria-controls=\"collapse-{{first_id}}\" itemprop=\"name\"><span><b style=\"color: #39CBA1\">{{ueberschrift}} </b>{{ueberschrift_detail}}</span></button> <span class=\"icon float-right\"></span> </div> <div id=\"collapse-{{first_id}}\" class=\"collapse\" aria-labelledby=\"heading-{{second_id}}\" data-parent=\"#accordion\" style=\"\"> <div class=\"card-body p-3 p-md-4\" itemprop=\"acceptedAnswer\" itemscope=\"\" itemtype=\"http://schema.org/Answer\"> <div itemprop=\"text\">{{detail}}</div> <a class=\"btn btn-block btn-buy\" title=\"Zum Artikel\" href=\"{{button_link}}\">{{button_text}}</a> </div> </div>";
+
+    var formattedDetail = detail;
+
+    // Bullet point
+    while (formattedDetail.includes("##")){
+      formattedDetail = formattedDetail
+        .replace("##", "•");
+    }
+
+    // Bolt font
+    if (formattedDetail.startsWith("*")){
+      formattedDetail = formattedDetail
+        .replace("*", "<b style=\"color: #39CBA1\">");
+    }
+    while (formattedDetail.includes(" *")){
+      formattedDetail = formattedDetail
+        .replace(" *", " <b style=\"color: #39CBA1\">");
+    }
+    while (formattedDetail.includes("\n*")){
+      formattedDetail = formattedDetail
+        .replace("\n*", "\n<b style=\"color: #39CBA1\">");
+    }
+    while (formattedDetail.includes("* ")){
+      formattedDetail = formattedDetail
+        .replace("* ", "</b> ");
+    }
+    while (formattedDetail.includes("*\n")){
+      formattedDetail = formattedDetail
+        .replace("*\n", "</b>\n");
+    }
+    if (formattedDetail.endsWith("*")){
+      formattedDetail = formattedDetail
+        .replace("*", "</b>");
+    }
+
+    // Italic font
+    if (formattedDetail.startsWith("_")){
+      formattedDetail = formattedDetail
+        .replace("_", "<em>");
+    }
+    while (formattedDetail.includes(" _")){
+      formattedDetail = formattedDetail
+        .replace(" _", " <em>");
+    }
+    while (formattedDetail.includes("\n_")){
+      formattedDetail = formattedDetail
+        .replace("\n_", "\n<em>");
+    }
+    while (formattedDetail.includes("_ ")){
+      formattedDetail = formattedDetail
+        .replace("_ ", "</em> ");
+    }
+    while (formattedDetail.includes("_\n")){
+      formattedDetail = formattedDetail
+        .replace("_\n", "</em>\n");
+    }
+    if (formattedDetail.endsWith("_")){
+      formattedDetail = formattedDetail
+        .replace("_", "</em>");
+    }
+
+    while (formattedDetail.includes("\n")){
+      formattedDetail = formattedDetail
+        .replace("\n", "<br>");
+    }
 
     var htmlItemContent = hmtlItemTemplate 
       .replace("{{second_id}}", this.secondId.toString())
@@ -36,15 +123,11 @@ export class AppComponent {
       .replace("{{first_id}}", this.firstId.toString())
       .replace("{{ueberschrift}}", header)
       .replace("{{ueberschrift_detail}}", headerDetail)
-      .replace("{{detail}}", detail)
+      .replace("{{detail}}", formattedDetail)
       .replace("{{button_text}}", buttonText)
       .replace("{{button_link}}", buttonLink);
 
-    this.allHtmlItemContents += htmlItemContent;
-
-    this.renderHtml()
-
-    this.copyMessage(this.htmlResult);
+    return htmlItemContent;
   }
 
   deleteLast(){
