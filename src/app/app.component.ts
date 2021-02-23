@@ -138,9 +138,32 @@ export class AppComponent implements OnInit {
     this.copyMessage(this.htmlResult);
   }
 
+  importHtml(){
+    navigator.clipboard.readText()
+  .then(text => {
+
+    var htmlItemsFromPastetText = text
+    .replace(/^.*?<!--PLACEHOLDER-START-DO-NOT-REMOVE-->/, "")
+    .replace(/<!--PLACEHOLDER-END-DO-NOT-REMOVE-->.*?$/, "");
+
+    this.allHtmlItemContents = htmlItemsFromPastetText;
+
+    this.renderHtml();
+  })
+  .catch(err => {
+    // maybe user didn't grant access to read from clipboard
+    alert('Um den Text aus der Zwischenablage eingfügen zu könnne muss der Browser das Recht dazu haben :(');
+  });
+  }
+
   renderHtml(){
-    var htmlBeginning = "<div style=\"text-align:center\"> <img src=\"https://www.arctic.de/media/78/e0/e3/1580897843/ARCTIC_Community_grey.svg\" width=\"100px\"> </img> <h3 style=\"font-size:1.3rem; margin-top:12px; margin-bottom:30px\">Stellenangebote</h3> </div> <div itemscope=\"\" itemtype=\"http://schema.org/FAQPage\"> <div id=\"accordion\" class=\"faq\"> <div class=\"mb-5\"> <div class=\"row\"> <div class=\"col-12 col-lg-12\"> <div class=\"card mb-2\" itemprop=\"mainEntity\" itemscope=\"\" itemtype=\"http://schema.org/Question\">";
-    var htmlEnd = "</div> </div> </div> </div> </div>";
+    var htmlPlaceholderStart = "<!--PLACEHOLDER-START-DO-NOT-REMOVE-->";
+    var htmlPlaceholderEnd = "<!--PLACEHOLDER-END-DO-NOT-REMOVE-->";
+
+    var htmlBeginning = "<div style=\"text-align:center\"> <img src=\"https://www.arctic.de/media/78/e0/e3/1580897843/ARCTIC_Community_grey.svg\" width=\"100px\"> </img> <h3 style=\"font-size:1.3rem; margin-top:12px; margin-bottom:30px\">Stellenangebote</h3> </div> <div itemscope=\"\" itemtype=\"http://schema.org/FAQPage\"> <div id=\"accordion\" class=\"faq\"> <div class=\"mb-5\"> <div class=\"row\"> <div class=\"col-12 col-lg-12\"> <div class=\"card mb-2\" itemprop=\"mainEntity\" itemscope=\"\" itemtype=\"http://schema.org/Question\">" + htmlPlaceholderStart;
+
+    var htmlEnd = htmlPlaceholderEnd + " </div> </div> </div> </div> </div>";
+
     this.htmlResult = htmlBeginning + this.allHtmlItemContents + htmlEnd;
 
     var htmlResultExpanded = this.htmlResult;

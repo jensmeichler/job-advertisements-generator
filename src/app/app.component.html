@@ -87,10 +87,20 @@ Wir freuen uns auf deine Bewerbung mit Angabe deiner Gehaltsvorstellungen unter 
       </div>
 						</div>
 						<button
+      id="buttonDelete"
+      type="button"
+      (click)="importHtml()"
+      class="btn btn-warning btn-lg btn-block"
+      title="Mit diesem Button wird der HTML-Code der sich in deiner Zwischenablage befindet als Template eingefügt. Dies geht nur am Anfang. (Alle vorherigen Änderungen werden damit entfernt)"
+    >
+      HTML aus Zwischenablage einfügen
+    </button>
+						<button
       id="buttonAdd"
       type="button"
       (click)="add()"
       class="btn btn-info btn-lg btn-block"
+      title="Mit diesem Button wird aus dem eingegebenen Text eine Stellenanzeige generiert und angefügt. Danach wird der HTML-Code direkt in die Zwischenablage kopiert und kann in die Website eingefügt werden."
     >
       Hinzufügen und in die Zwischenablage kopieren
     </button>
@@ -99,6 +109,7 @@ Wir freuen uns auf deine Bewerbung mit Angabe deiner Gehaltsvorstellungen unter 
       type="button"
       (click)="deleteLast()"
       class="btn btn-danger btn-lg btn-block"
+      title="Dieser Button stellt die letzte Version wieder her. Wenn du vorher einen Eintrag hinzugefügt hast, dann wird dieser wieder entfernt. Wenn du zuletzt HTML-Code aus der Zwischenablage eingefügt hast, dann wird diese Änderung wieder entfernt."
     >
       Letzten Eintrag löschen
     </button>
@@ -114,6 +125,27 @@ Wir freuen uns auf deine Bewerbung mit Angabe deiner Gehaltsvorstellungen unter 
 							</p>
 							<hr class="my-4" />
 							<p>
+								<b>Bestehende Stellenanzeigen übernehmen:</b>
+								<br />
+								1.&nbsp;&nbsp;&nbsp;&nbsp;Bei Shopware einloggen und die Erlebniswelt "Karriere"
+        öffnen (oder auf den
+								<a target="_blank"
+									href="https://www.arctic.ac/admin#/sw/cms/detail/d92fe0bd7a7c426e982e2895d9dfa017">Link</a>
+								klicken)
+								<br />
+        2.&nbsp;&nbsp;&nbsp;&nbsp;Auf den Block "Stellenangebote" klicken
+								<br />
+        3.&nbsp;&nbsp;&nbsp;&nbsp;Auf das kleine Zahnrad in der oberen rechten Ecke des
+        Blocks klicken
+								<br />
+        4.&nbsp;&nbsp;&nbsp;&nbsp;Den HTML-Code aus dem Textfeld kopieren ( [STRG] + [C] )
+								<br />
+        5.&nbsp;&nbsp;&nbsp;&nbsp;Auf den Button "HTML aus Zwischenablage einfügen" klicken
+								<br />
+								<br />
+
+								<b>Neues Template erstellen:</b>
+								<br />
 								1.&nbsp;&nbsp;&nbsp;&nbsp;Überschrift eintragen (Wird in Farbe
 								angezeigt)
 								<br />
@@ -133,7 +165,7 @@ Wir freuen uns auf deine Bewerbung mit Angabe deiner Gehaltsvorstellungen unter 
         hinführen soll (mailto:career@arctic.ac öffnet die Mailanwendung und
         gibt career@arctic.ac als Empfänger ein)
 								<br />
-        6.&nbsp;&nbsp;&nbsp;&nbsp;Auf "Hinzufügen" clicken (HTML-Code wird
+        6.&nbsp;&nbsp;&nbsp;&nbsp;Auf "Hinzufügen und in die Zwischenablage kopieren" clicken (HTML-Code wird
         automatisch in Zwischenablage kopiert)
 								<br />
         7.&nbsp;&nbsp;&nbsp;&nbsp;Ggf. weitere Stellenausschreibungen angeben
@@ -161,6 +193,7 @@ Wir freuen uns auf deine Bewerbung mit Angabe deiner Gehaltsvorstellungen unter 
         9.&nbsp;&nbsp;&nbsp;&nbsp;Speichern und fertig
 								<br />
 								<br />
+
         Info: Das untenstehende Beispiel dient nur zur Orientierung und wird auf
         der Website dann korrekt dargestellt (Zuklappen funktioniert dann).
       </p>
