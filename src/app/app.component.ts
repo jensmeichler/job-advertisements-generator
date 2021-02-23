@@ -7,8 +7,6 @@ import { Component, OnInit, } from "@angular/core";
 })
 export class AppComponent implements OnInit {
 
-  firstId = 1000;
-  secondId = 2000;
   allHtmlItemContents = "";
   allHtmlItemContentsBackup = "";
   htmlResult = "";
@@ -30,8 +28,9 @@ export class AppComponent implements OnInit {
   }
 
   getHtmlItemContent(isTemplate: Boolean){
-    this.firstId = this.firstId+1;
-    this.secondId = this.secondId+1;
+    var currentDate = Date.now();
+    var firstId = currentDate;
+    var secondId = currentDate+1;
 
     var header = (<HTMLInputElement>document.getElementById("inputHeader"))?.value;
     var headerDetail = (<HTMLInputElement>document.getElementById("inputHeaderDetail"))?.value;
@@ -47,7 +46,7 @@ export class AppComponent implements OnInit {
       var buttonLink = (<HTMLInputElement>document.getElementById("inputLink"))?.placeholder;
     }
 
-    var hmtlItemTemplate = "<div class=\"card-header collapsed\" id=\"heading-{{second_id}}\" data-toggle=\"collapse\" data-target=\"#collapse-{{first_id}}\" aria-expanded=\"false\"> <button class=\"btn btn-link collapsed\" data-toggle=\"collapse\" data-target=\"#collapse-{{first_id}}\" aria-expanded=\"false\" aria-controls=\"collapse-{{first_id}}\" itemprop=\"name\"><span><b style=\"color: #39CBA1\">{{ueberschrift}} </b>{{ueberschrift_detail}}</span></button> <span class=\"icon float-right\"></span> </div> <div id=\"collapse-{{first_id}}\" class=\"collapse\" aria-labelledby=\"heading-{{second_id}}\" data-parent=\"#accordion\" style=\"\"> <div class=\"card-body p-3 p-md-4\" itemprop=\"acceptedAnswer\" itemscope=\"\" itemtype=\"http://schema.org/Answer\"> <div itemprop=\"text\">{{detail}}</div> <a class=\"btn btn-block btn-buy\" title=\"Zum Artikel\" href=\"{{button_link}}\">{{button_text}}</a> </div> </div>";
+    var hmtlItemTemplate = "<!--TEMPLATE-{{first_id}}-START--><div class=\"card-header collapsed\" id=\"heading-{{second_id}}\" data-toggle=\"collapse\" data-target=\"#collapse-{{first_id}}\" aria-expanded=\"false\"> <button class=\"btn btn-link collapsed\" data-toggle=\"collapse\" data-target=\"#collapse-{{first_id}}\" aria-expanded=\"false\" aria-controls=\"collapse-{{first_id}}\" itemprop=\"name\"><span><b style=\"color: #39CBA1\">{{ueberschrift}} </b>{{ueberschrift_detail}}</span></button> <span class=\"icon float-right\"></span> </div> <div id=\"collapse-{{first_id}}\" class=\"collapse\" aria-labelledby=\"heading-{{second_id}}\" data-parent=\"#accordion\" style=\"\"> <div class=\"card-body p-3 p-md-4\" itemprop=\"acceptedAnswer\" itemscope=\"\" itemtype=\"http://schema.org/Answer\"> <div itemprop=\"text\">{{detail}}</div> <a class=\"btn btn-block btn-buy\" title=\"Zum Artikel\" href=\"{{button_link}}\">{{button_text}}</a> </div> </div><!--TEMPLATE-{{first_id}}-END-->";
 
     var formattedDetail = detail;
 
@@ -115,12 +114,12 @@ export class AppComponent implements OnInit {
     }
 
     var htmlItemContent = hmtlItemTemplate 
-      .replace("{{second_id}}", this.secondId.toString())
-      .replace("{{second_id}}", this.secondId.toString())
-      .replace("{{first_id}}", this.firstId.toString())
-      .replace("{{first_id}}", this.firstId.toString())
-      .replace("{{first_id}}", this.firstId.toString())
-      .replace("{{first_id}}", this.firstId.toString())
+      .replace("{{second_id}}", secondId.toString())
+      .replace("{{second_id}}", secondId.toString())
+      .replace("{{first_id}}", firstId.toString())
+      .replace("{{first_id}}", firstId.toString())
+      .replace("{{first_id}}", firstId.toString())
+      .replace("{{first_id}}", firstId.toString())
       .replace("{{ueberschrift}}", header)
       .replace("{{ueberschrift_detail}}", headerDetail)
       .replace("{{detail}}", formattedDetail)
