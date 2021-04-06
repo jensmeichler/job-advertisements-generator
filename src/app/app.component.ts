@@ -1,4 +1,5 @@
 import { Component, OnInit, } from "@angular/core";
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: "my-app",
@@ -7,9 +8,13 @@ import { Component, OnInit, } from "@angular/core";
 })
 export class AppComponent implements OnInit {
 
+  careerCmsPageApiUrl = "https://www.arctic.de/store-api/v1/cms/d92fe0bd7a7c426e982e2895d9dfa017";
   allHtmlItemContents = "";
   allHtmlItemContentsBackup = "";
   htmlResult = "";
+
+  constructor(private http: HttpClient) {
+  }
 
   ngOnInit() {
     this.allHtmlItemContents = this.getHtmlItemContent(true);
@@ -18,6 +23,8 @@ export class AppComponent implements OnInit {
   }
 
   add() {
+    console.log("add()");
+
     this.allHtmlItemContentsBackup = this.allHtmlItemContents;
 
     this.allHtmlItemContents += this.getHtmlItemContent(false);
@@ -28,6 +35,7 @@ export class AppComponent implements OnInit {
   }
 
   getHtmlItemContent(isTemplate: Boolean){
+    console.log("getHtmlItemContent({{isTemplate}})");
     var currentDate = Date.now();
     var firstId = currentDate;
     var secondId = currentDate+1;
@@ -46,7 +54,10 @@ export class AppComponent implements OnInit {
       var buttonLink = (<HTMLInputElement>document.getElementById("inputLink"))?.placeholder;
     }
 
-    var hmtlItemTemplate = "<!--TEMPLATE-{{first_id}}-START--><div class=\"card-header collapsed\" id=\"heading-{{second_id}}\" data-toggle=\"collapse\" data-target=\"#collapse-{{first_id}}\" aria-expanded=\"false\"> <button class=\"btn btn-link collapsed\" data-toggle=\"collapse\" data-target=\"#collapse-{{first_id}}\" aria-expanded=\"false\" aria-controls=\"collapse-{{first_id}}\" itemprop=\"name\"><span><b style=\"color: #39CBA1\">{{ueberschrift}} </b>{{ueberschrift_detail}}</span></button> <span class=\"icon float-right\"></span> </div> <div id=\"collapse-{{first_id}}\" class=\"collapse\" aria-labelledby=\"heading-{{second_id}}\" data-parent=\"#accordion\" style=\"\"> <div class=\"card-body p-3 p-md-4\" itemprop=\"acceptedAnswer\" itemscope=\"\" itemtype=\"http://schema.org/Answer\"> <div itemprop=\"text\">{{detail}}</div> <a class=\"btn btn-block btn-buy\" title=\"Zum Artikel\" href=\"{{button_link}}\">{{button_text}}</a> </div> </div><!--TEMPLATE-{{first_id}}-END-->";
+    let anchorItemStart = "<!--ANCHOR-ITEM-START--DO-NOT-REMOVE-->";
+    let anchorItemEnd = "<!--ANCHOR-ITEM-END--DO-NOT-REMOVE-->";
+
+    var hmtlItemTemplate = anchorItemStart+"<!--TEMPLATE-{{first_id}}-START--><div class=\"card-header collapsed\" id=\"heading-{{second_id}}\" data-toggle=\"collapse\" data-target=\"#collapse-{{first_id}}\" aria-expanded=\"false\"> <button class=\"btn btn-link collapsed\" data-toggle=\"collapse\" data-target=\"#collapse-{{first_id}}\" aria-expanded=\"false\" aria-controls=\"collapse-{{first_id}}\" itemprop=\"name\"><span><b style=\"color: #39CBA1\">{{ueberschrift}} </b>{{ueberschrift_detail}}</span></button> <span class=\"icon float-right\"></span> </div> <div id=\"collapse-{{first_id}}\" class=\"collapse\" aria-labelledby=\"heading-{{second_id}}\" data-parent=\"#accordion\" style=\"\"> <div class=\"card-body p-3 p-md-4\" itemprop=\"acceptedAnswer\" itemscope=\"\" itemtype=\"http://schema.org/Answer\"> <div itemprop=\"text\">{{detail}}</div> <a class=\"btn btn-block btn-buy\" title=\"Zum Artikel\" href=\"{{button_link}}\">{{button_text}}</a> </div> </div><!--TEMPLATE-{{first_id}}-END-->"+anchorItemEnd;
 
     var formattedDetail = detail;
 
@@ -130,6 +141,7 @@ export class AppComponent implements OnInit {
   }
 
   deleteLast(){
+    console.log("deleteLast()");
     this.allHtmlItemContents = this.allHtmlItemContentsBackup;
 
     this.renderHtml()
@@ -138,6 +150,7 @@ export class AppComponent implements OnInit {
   }
 
   importHtml(){
+    console.log("importHtml()");
     navigator.clipboard.readText()
   .then(text => {
 
@@ -155,15 +168,35 @@ export class AppComponent implements OnInit {
   });
   }
 
-  renderHtml(){
-    var htmlPlaceholderStart = "<!--PLACEHOLDER-START-DO-NOT-REMOVE-->";
-    var htmlPlaceholderEnd = "<!--PLACEHOLDER-END-DO-NOT-REMOVE-->";
+  renderHtml(html: string = null){
+    console.log("renderHtml()");
 
-    var htmlBeginning = "<div style=\"text-align:center\"> <img src=\"https://www.arctic.de/media/78/e0/e3/1580897843/ARCTIC_Community_grey.svg\" width=\"100px\"> </img> <h3 style=\"font-size:1.3rem; margin-top:12px; margin-bottom:30px\">Stellenangebote</h3> </div> <div itemscope=\"\" itemtype=\"http://schema.org/FAQPage\"> <div id=\"accordion\" class=\"faq\"> <div class=\"mb-5\"> <div class=\"row\"> <div class=\"col-12 col-lg-12\"> <div class=\"card mb-2\" itemprop=\"mainEntity\" itemscope=\"\" itemtype=\"http://schema.org/Question\">" + htmlPlaceholderStart;
+    if (html == null){
+      var htmlPlaceholderStart = "<!--PLACEHOLDER-START-DO-NOT-REMOVE-->";
+      var htmlPlaceholderEnd = "<!--PLACEHOLDER-END-DO-NOT-REMOVE-->";
 
-    var htmlEnd = htmlPlaceholderEnd + " </div> </div> </div> </div> </div>";
+      var htmlBeginning = "<div style=\"text-align:center\"> <img src=\"https://www.arctic.de/media/78/e0/e3/1580897843/ARCTIC_Community_grey.svg\" width=\"100px\"> </img> <h3   style=\"font-size:1.3rem; margin-top:12px; margin-bottom:30px\">Stellenangebote</h3> </div> <div itemscope=\"\" itemtype=\"http://schema.org/FAQPage\"> <div id=\"accordion\" class=\"faq\"> <div   class=\"mb-5\"> <div class=\"row\"> <div class=\"col-12 col-lg-12\"> <div class=\"card mb-2\" itemprop=\"mainEntity\" itemscope=\"\" itemtype=\"http://schema.org/Question\">" +  htmlPlaceholderStart;
 
-    this.htmlResult = htmlBeginning + this.allHtmlItemContents + htmlEnd;
+      var htmlEnd = htmlPlaceholderEnd + " </div> </div> </div> </div> </div>";
+
+      this.htmlResult = htmlBeginning + this.allHtmlItemContents + htmlEnd;
+    }
+    else{
+      while (html.includes('\\r\\n')){
+        html = html.replace('\\r\\n', '');
+      }
+      while (html.includes('\\"')){
+        html = html.replace('\\"', '"');
+      }
+      this.htmlResult = html;
+      this.allHtmlItemContentsBackup = this.allHtmlItemContents;
+
+      this.allHtmlItemContents = this.htmlResult
+        .replace(/.*?<!--PLACEHOLDER-START-DO-NOT-REMOVE-->/, '')
+        .replace(/<!--PLACEHOLDER-END-DO-NOT-REMOVE-->.*?$/, '');
+
+      console.log(this.allHtmlItemContents);
+    }
 
     var htmlResultExpanded = this.htmlResult;
     while(htmlResultExpanded.includes("card-header collapsed")
@@ -181,6 +214,7 @@ export class AppComponent implements OnInit {
   }
 
   copyMessage(val: string){
+    console.log("copyMessage()");
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -195,17 +229,19 @@ export class AppComponent implements OnInit {
   }
 
   connectApi(){
-    let test = "Button hat leider noch keine Funktion...";
+    console.log("connectApi()");
+    let anchorStart = /.*?<!--ANCHOR-START--DO-NOT-REMOVE-->/;
+    let anchorEnd = /<!--ANCHOR-END--DO-NOT-REMOVE-->.*?$/;
 
-    // let headers = new HttpHeaders();
-    // headers  = headers.append('sw-access-key', 'SWSCRXB4YVK3SGDBA21RM0RSAQ');
+    let headers = new HttpHeaders();
+    headers  = headers.append('sw-access-key', 'SWSCRXB4YVK3SGDBA21RM0RSAQ');
 
-    // let params = new HttpParams();
-    // params = params.append('param-1', 'value-1');
-    // params = params.append('param-2', 'value-2');
-   
-    // this.httpClient.get("https://arctic.sw6aufbau.de/store-api/v1/cms/4d7b93ea9a07448190d2fdbc9ee4aee0", { headers , params })
-    
-    alert(test);
+    this.http.get<any>(this.careerCmsPageApiUrl, { headers }) 
+      .subscribe(x =>
+      this.renderHtml(JSON.stringify(x)
+           .replace(anchorStart, '')
+           .replace(anchorEnd, '')
+        )
+      );
   }
 }
