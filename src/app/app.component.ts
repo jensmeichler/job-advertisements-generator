@@ -193,4 +193,19 @@ export class AppComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(selBox);
   }
+
+  connectApi(){
+    let test = "Button hat leider noch keine Funktion...";
+
+    // let headers = new HttpHeaders();
+    // headers  = headers.append('sw-access-key', 'SWSCRXB4YVK3SGDBA21RM0RSAQ');
+
+    // let params = new HttpParams();
+    // params = params.append('param-1', 'value-1');
+    // params = params.append('param-2', 'value-2');
+   
+    // this.httpClient.get("https://arctic.sw6aufbau.de/store-api/v1/cms/4d7b93ea9a07448190d2fdbc9ee4aee0", { headers , params })
+    
+    alert(test);
+  }
 }

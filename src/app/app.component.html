@@ -1,40 +1,40 @@
 <link rel="stylesheet"
-	href="https://www.arctic.de/theme/316102a06d14d2d50a47c00d23bf868f/css/all.css?1612791886697029" />
+  href="https://www.arctic.de/theme/316102a06d14d2d50a47c00d23bf868f/css/all.css?1612791886697029" />
 <link rel="stylesheet" href="https://www.arctic.de/bundles/moorlfoundation/storefront/css/font-awesome-free.css" />
 <link rel="stylesheet" href="https://www.arctic.de/bundles/moorlfoundation/storefront/css/animate.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
 
 <form style="margin: 10px; display:flex">
-	<div style="float:left; flex:1">
-		<div class="form-group row">
-			<label for="inputHeader" class="col-sm-2 col-form-label"
+  <div style="float:left; flex:1">
+    <div class="form-group row">
+      <label for="inputHeader" class="col-sm-2 col-form-label"
         >Überschrift</label>
-			<div class="col-sm-10">
-				<input
+      <div class="col-sm-10">
+        <input
           type="header"
           class="form-control"
           id="inputHeader"
           placeholder="Content Manager (m/w/d)"
         />
       </div>
-			</div>
-			<div class="form-group row">
-				<label for="inputHeaderDetail" class="col-sm-2 col-form-label"
+    </div>
+    <div class="form-group row">
+      <label for="inputHeaderDetail" class="col-sm-2 col-form-label"
         >Überschrift Detail</label>
-				<div class="col-sm-10">
-					<input
+      <div class="col-sm-10">
+        <input
           type="headerDetail"
           class="form-control"
           id="inputHeaderDetail"
           placeholder="Vollzeit, Festanstellung"
         />
       </div>
-				</div>
-				<div class="form-group row">
-					<label for="inputDetail" class="col-sm-2 col-form-label">Details</label>
-					<div class="col-sm-10">
-						<textarea
+    </div>
+    <div class="form-group row">
+      <label for="inputDetail" class="col-sm-2 col-form-label">Details</label>
+      <div class="col-sm-10">
+        <textarea
           class="form-control"
           id="inputDetail"
           rows="22"
@@ -61,33 +61,49 @@
 *Du bist interessiert?*
 Wir freuen uns auf deine Bewerbung mit Angabe deiner Gehaltsvorstellungen unter _career@arctic.ac_"
         ></textarea>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="inputButtonText" class="col-sm-2 col-form-label"
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputButtonText" class="col-sm-2 col-form-label"
         >Button Text</label>
-					<div class="col-sm-10">
-						<input
+      <div class="col-sm-10">
+        <input
           type="buttonText"
           class="form-control"
           id="inputButtonText"
           placeholder="Jetzt bewerben"
         />
       </div>
-					</div>
-					<div class="form-group row">
-						<label for="inputLink" class="col-sm-2 col-form-label">Button Link</label>
-						<div class="col-sm-10">
-							<input
+    </div>
+    <div class="form-group row">
+      <label for="inputLink" class="col-sm-2 col-form-label">Button Link</label>
+      <div class="col-sm-10">
+        <input
           type="buttonLink"
           class="form-control"
           id="inputLink"
-          placeholder="mailto:career@arctic.ac"
+          placeholder="mailto:career@arctic.de"
         />
       </div>
-						</div>
-						<button
-      id="buttonDelete"
+    </div>
+
+    <div class="jumbotron" style="padding: 0px">
+      <table width="100%">
+        <tr>
+          <th style="padding-right:2.5px">
+            <button
+      id="buttonConnect"
+      type="button"
+      (click)="connectApi()"
+      class="btn btn-success btn-lg btn-block"
+      title=""
+    >
+      CONNECT...
+    </button>
+          </th>
+          <th style="padding-right:2.5px; padding-left:2.5px">
+            <button
+      id="buttonImport"
       type="button"
       (click)="importHtml()"
       class="btn btn-warning btn-lg btn-block"
@@ -95,7 +111,9 @@ Wir freuen uns auf deine Bewerbung mit Angabe deiner Gehaltsvorstellungen unter 
     >
       HTML aus Zwischenablage einfügen
     </button>
-						<button
+          </th>
+          <th style="padding-left:2.5px">
+            <button
       id="buttonAdd"
       type="button"
       (click)="add()"
@@ -104,7 +122,11 @@ Wir freuen uns auf deine Bewerbung mit Angabe deiner Gehaltsvorstellungen unter 
     >
       Hinzufügen und in die Zwischenablage kopieren
     </button>
-						<button
+          </th>
+        </tr>
+        <tr>
+          <th colspan="3" style="padding-top: 0px">
+            <button
       id="buttonDelete"
       type="button"
       (click)="deleteLast()"
@@ -113,92 +135,94 @@ Wir freuen uns auf deine Bewerbung mit Angabe deiner Gehaltsvorstellungen unter 
     >
       Letzten Eintrag löschen
     </button>
-						<div class="jumbotron" style="margin-top:8px">
-							<h1 class="display-5">How To</h1>
-							<p class="lead">
-								Hier kannst du Stellenanzeigen ganz einfach auf die Webseite bringen.
-								Tippe einfach die Daten in die oben stehenden Felder ein und klicke auf
-								"Hinzufügen". Damit wird der Eintrag hinzugefügt und HTML-Code
-								generiert, der in die Website eingefügt werden kann. Ein Beispiel wird
-								im Anschluss unter diesem Textfeld angezeigt (Das auf und zu klappen
-								funktioniert leider nicht, deshalb wird alles aufgeklappt angezeigt).
-							</p>
-							<hr class="my-4" />
-							<p>
-								<b>Bestehende Stellenanzeigen übernehmen:</b>
-								<br />
+          </th>
+        </tr>
+      </table>
+    </div>
+
+    <div class="jumbotron" style="margin-top:8px">
+      <h1 class="display-5">How To</h1>
+      <p class="lead">
+        Hier kannst du Stellenanzeigen ganz einfach auf die Webseite bringen.
+        Tippe einfach die Daten in die oben stehenden Felder ein und klicke auf
+        "Hinzufügen". Damit wird der Eintrag hinzugefügt und HTML-Code
+        generiert, der in die Website eingefügt werden kann. Ein Beispiel wird
+        im Anschluss unter diesem Textfeld angezeigt (Das auf und zu klappen
+        funktioniert leider nicht, deshalb wird alles aufgeklappt angezeigt).
+      </p>
+      <hr class="my-4" />
+      <p>
+        <b>Bestehende Stellenanzeigen übernehmen:</b>
+        <br />
 								1.&nbsp;&nbsp;&nbsp;&nbsp;Bei Shopware einloggen und die Erlebniswelt "Karriere"
         öffnen (oder auf den
-								<a target="_blank"
-									href="https://www.arctic.ac/admin#/sw/cms/detail/d92fe0bd7a7c426e982e2895d9dfa017">Link</a>
-								klicken)
-								<br />
+        <a target="_blank" href="https://www.arctic.ac/admin#/sw/cms/detail/d92fe0bd7a7c426e982e2895d9dfa017">Link</a>
+        klicken)
+        <br />
         2.&nbsp;&nbsp;&nbsp;&nbsp;Auf den Block "Stellenangebote" klicken
-								<br />
+        <br />
         3.&nbsp;&nbsp;&nbsp;&nbsp;Auf das kleine Zahnrad in der oberen rechten Ecke des
         Blocks klicken
-								<br />
+        <br />
         4.&nbsp;&nbsp;&nbsp;&nbsp;Den HTML-Code aus dem Textfeld kopieren ( [STRG] + [C] )
-								<br />
+        <br />
         5.&nbsp;&nbsp;&nbsp;&nbsp;Auf den Button "HTML aus Zwischenablage einfügen" klicken
-								<br />
-								<br />
+        <br />
+        <br />
 
-								<b>Neues Template erstellen:</b>
-								<br />
+        <b>Neues Template erstellen:</b>
+        <br />
 								1.&nbsp;&nbsp;&nbsp;&nbsp;Überschrift eintragen (Wird in Farbe
 								angezeigt)
-								<br />
+        <br />
         2.&nbsp;&nbsp;&nbsp;&nbsp;Überschrift Detail eintragen (Wird rechts
         neben der Überschrift angezeigt)
-								<br />
+        <br />
         3.&nbsp;&nbsp;&nbsp;&nbsp;Details eintragen (Text der darunter angezeigt
         wird)
-								<br />
+        <br />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Format: ##Text =
         •Bulletpoint, *Text* = <b>Fetter Text</b>, _Text_ = <em>Kursiv</em>
-								<br />
+        <br />
         4.&nbsp;&nbsp;&nbsp;&nbsp;Den Text eintragen, der am Ende auf dem Button
         stehen soll
-								<br />
+        <br />
         5.&nbsp;&nbsp;&nbsp;&nbsp;Den Link eintragen, zu dem der Button
         hinführen soll (mailto:career@arctic.ac öffnet die Mailanwendung und
         gibt career@arctic.ac als Empfänger ein)
-								<br />
+        <br />
         6.&nbsp;&nbsp;&nbsp;&nbsp;Auf "Hinzufügen und in die Zwischenablage kopieren" clicken (HTML-Code wird
         automatisch in Zwischenablage kopiert)
-								<br />
+        <br />
         7.&nbsp;&nbsp;&nbsp;&nbsp;Ggf. weitere Stellenausschreibungen angeben
         (Prozedur wiederholen)
-								<br />
+        <br />
         8.&nbsp;&nbsp;&nbsp;&nbsp;Den HTML-Code, der sich jetzt in der
         Zwischenablage befindet,
-								<a target="_blank"
-									href="https://www.arctic.ac/admin#/sw/cms/detail/d92fe0bd7a7c426e982e2895d9dfa017">in
-									die Website einfügen</a>
-								<br />
+        <a target="_blank" href="https://www.arctic.ac/admin#/sw/cms/detail/d92fe0bd7a7c426e982e2895d9dfa017">in
+          die Website einfügen</a>
+        <br />
         8.1&nbsp;&nbsp;Bei Shopware einloggen und die Erlebniswelt "Karriere"
         öffnen (oder auf den
-								<a target="_blank"
-									href="https://www.arctic.ac/admin#/sw/cms/detail/d92fe0bd7a7c426e982e2895d9dfa017">Link</a>
-								klicken)
-								<br />
+        <a target="_blank" href="https://www.arctic.ac/admin#/sw/cms/detail/d92fe0bd7a7c426e982e2895d9dfa017">Link</a>
+        klicken)
+        <br />
         8.2&nbsp;&nbsp;Auf den Block "Stellenangebote" klicken
-								<br />
+        <br />
         8.3&nbsp;&nbsp;Auf das kleine Zahnrad in der oberen rechten Ecke des
         Blocks klicken
-								<br />
+        <br />
         8.4&nbsp;&nbsp;Den HTML-Code in das Textfeld einfügen
-								<br />
+        <br />
         9.&nbsp;&nbsp;&nbsp;&nbsp;Speichern und fertig
-								<br />
-								<br />
+        <br />
+        <br />
 
         Info: Das untenstehende Beispiel dient nur zur Orientierung und wird auf
         der Website dann korrekt dargestellt (Zuklappen funktioniert dann).
       </p>
-						</div>
+    </div>
 
-						<div id="result" style="margin-top:40px; margin-bottom:20px"></div>
-					</div>
+    <div id="result" style="margin-top:40px; margin-bottom:20px"></div>
+  </div>
 </form>
