@@ -17,7 +17,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.allHtmlItemContents = this.getHtmlItemContent(true);
+    console.log("ngOnInit()");
+
+    this.allHtmlItemContents = this.getHtmlItemContent();
     this.renderHtml();
     this.allHtmlItemContents = "";
   }
@@ -27,15 +29,16 @@ export class AppComponent implements OnInit {
 
     this.allHtmlItemContentsBackup = this.allHtmlItemContents;
 
-    this.allHtmlItemContents += this.getHtmlItemContent(false);
+    this.allHtmlItemContents += this.getHtmlItemContent();
 
     this.renderHtml()
 
     this.copyMessage(this.htmlResult);
   }
 
-  getHtmlItemContent(isTemplate: Boolean){
+  getHtmlItemContent(){
     console.log("getHtmlItemContent({{isTemplate}})");
+
     var currentDate = Date.now();
     var firstId = currentDate;
     var secondId = currentDate+1;
@@ -46,11 +49,19 @@ export class AppComponent implements OnInit {
     var buttonText = (<HTMLInputElement>document.getElementById("inputButtonText"))?.value;
     var buttonLink = (<HTMLInputElement>document.getElementById("inputLink"))?.value;
 
-    if (isTemplate){
+    if (header == ""){
       var header = (<HTMLInputElement>document.getElementById("inputHeader"))?.placeholder;
+    }
+    if (headerDetail == ""){
       var headerDetail = (<HTMLInputElement>document.getElementById("inputHeaderDetail"))?.placeholder;
+    }
+    if (detail == ""){
       var detail = (<HTMLInputElement>document.getElementById("inputDetail"))?.placeholder;
+    }
+    if (buttonText == ""){
       var buttonText = (<HTMLInputElement>document.getElementById("inputButtonText"))?.placeholder;
+    }
+    if (buttonLink == ""){
       var buttonLink = (<HTMLInputElement>document.getElementById("inputLink"))?.placeholder;
     }
 
@@ -230,6 +241,7 @@ export class AppComponent implements OnInit {
 
   connectApi(){
     console.log("connectApi()");
+    
     let anchorStart = /.*?<!--ANCHOR-START--DO-NOT-REMOVE-->/;
     let anchorEnd = /<!--ANCHOR-END--DO-NOT-REMOVE-->.*?$/;
 
