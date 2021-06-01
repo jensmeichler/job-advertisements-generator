@@ -142,6 +142,8 @@ export class AppComponent implements OnInit {
       .replace("{{first_id}}", firstId.toString())
       .replace("{{first_id}}", firstId.toString())
       .replace("{{first_id}}", firstId.toString())
+      .replace("{{first_id}}", firstId.toString())
+      .replace("{{first_id}}", firstId.toString())
       .replace("{{ueberschrift}}", header)
       .replace("{{ueberschrift_detail}}", headerDetail)
       .replace("{{detail}}", formattedDetail)
