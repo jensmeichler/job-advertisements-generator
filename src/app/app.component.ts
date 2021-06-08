@@ -205,8 +205,8 @@ export class AppComponent implements OnInit {
       this.allHtmlItemContentsBackup = this.allHtmlItemContents;
 
       this.allHtmlItemContents = this.htmlResult
-        .replace(/.*?<!--PLACEHOLDER-START-DO-NOT-REMOVE-->/, '')
-        .replace(/<!--PLACEHOLDER-END-DO-NOT-REMOVE-->.*?$/, '');
+        .replace(/.*?<!--ANCHOR-START--DO-NOT-REMOVE-->/, '')
+        .replace(/<!--ANCHOR-END--DO-NOT-REMOVE-->.*?$/, '');
 
       console.log(this.allHtmlItemContents);
     }
