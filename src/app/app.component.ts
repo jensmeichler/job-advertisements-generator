@@ -198,15 +198,21 @@ export class AppComponent implements OnInit {
       while (html.includes('\\r\\n')){
         html = html.replace('\\r\\n', '');
       }
+      while (html.includes('\\n')){
+        html = html.replace('\\n', '');
+      }
       while (html.includes('\\"')){
         html = html.replace('\\"', '"');
       }
+
+      this.copyMessage(html);
+
       this.htmlResult = html;
       this.allHtmlItemContentsBackup = this.allHtmlItemContents;
 
       this.allHtmlItemContents = this.htmlResult
-        .replace(/.*?<!--ANCHOR-START--DO-NOT-REMOVE-->/, '')
-        .replace(/<!--ANCHOR-END--DO-NOT-REMOVE-->.*?$/, '');
+        .replace(/.*?<!--PLACEHOLDER-START-DO-NOT-REMOVE-->/, '')
+        .replace(/<!--PLACEHOLDER-END-DO-NOT-REMOVE-->.*?$/, '');
 
       console.log(this.allHtmlItemContents);
     }
@@ -244,8 +250,8 @@ export class AppComponent implements OnInit {
   connectApi(){
     console.log("connectApi()");
     
-    let anchorStart = /.*?<!--ANCHOR-START--DO-NOT-REMOVE-->/;
-    let anchorEnd = /<!--ANCHOR-END--DO-NOT-REMOVE-->.*?$/;
+    let start = /.*?<!--PLACEHOLDER-START-DO-NOT-REMOVE-->/;
+    let end = /<!--PLACEHOLDER-END-DO-NOT-REMOVE-->.*?$/;
 
     let headers = new HttpHeaders();
     headers  = headers.append('sw-access-key', 'SWSCRXB4YVK3SGDBA21RM0RSAQ');
@@ -253,8 +259,8 @@ export class AppComponent implements OnInit {
     this.http.get<any>(this.careerCmsPageApiUrl, { headers }) 
       .subscribe(x =>
       this.renderHtml(JSON.stringify(x)
-           .replace(anchorStart, '')
-           .replace(anchorEnd, '')
+           .replace(start, '')
+           .replace(end, '')
         )
       );
   }
