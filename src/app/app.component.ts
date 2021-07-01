@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   htmlResult = "";
 
   constructor(private http: HttpClient) {
+    window.location.href = 'https://job-advertisement-generator.azurewebsites.net/';
   }
 
   ngOnInit() {
